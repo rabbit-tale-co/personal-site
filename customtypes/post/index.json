@@ -1,0 +1,17 @@
+{
+  "format": "custom",
+  "id": "post",
+  "label": "post",
+  "repeatable": true,
+  "status": true,
+  "json": {
+    "Main": {
+      "uid": {
+        "config": {
+          "label": "UID"
+        },
+        "type": "UID"
+      }
+    }
+  }
+}
