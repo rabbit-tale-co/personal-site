@@ -195,7 +195,7 @@ const Calendar = ({ data }: { data: MonthDataType[] }) => {
 						type="button"
 					>
 						<span
-							className={`pointer-events-none duration-0 text-center ${active && "opacity-0"} ${textColor(dayData?.type)}`}
+							className={`pointer-events-none duration-0 text-center ${active && takeover ? "opacity-0" : "opacity-100"} ${textColor(dayData?.type)}`}
 						>
 							{dayData?.day || day}
 						</span>
