@@ -2,7 +2,11 @@ import Gallery from 'components/Calendar/Gallery'
 import Modal from 'components/Calendar/Modal'
 import TextBlock from './TextBlock'
 import useClickOutside from 'hooks/useClickOutside'
-import { themeTypes, type ContentItem, type MonthDataType } from 'lib/activity/activityTypes'
+import {
+	themeTypes,
+	type ContentItem,
+	type MonthDataType,
+} from 'lib/activity/activityTypes'
 import dayjs from 'dayjs'
 import Image, { type StaticImageData } from 'next/image'
 import placeholder from 'public/images/placeholder.jpg'
@@ -11,7 +15,6 @@ import { useInView } from 'react-intersection-observer'
 import { cn } from 'utils/tw'
 import CalendarButton from './CalendarButton'
 import Tooltip from 'components/Tooltip'
-import { bunnyLog } from 'bunny-log'
 
 const Calendar = ({ data }: { data: MonthDataType[] }) => {
 	const [calBgColor, setCalBgColor] = useState('none')
@@ -118,9 +121,11 @@ const Calendar = ({ data }: { data: MonthDataType[] }) => {
 				<div className='absolute inset-0 z-50 flex flex-col overflow-y-auto p-4'>
 					<div className='sticky top-0 z-10 self-start'>
 						<button
-							 className={`z-50 block w-max rounded-full px-3 py-1.5 font-bold tracking-wide shadow-md transition-transform active:scale-90 sm:hover:scale-90 sm:active:scale-75 ${
-                dayData && themeTypes.includes(dayData.type) ? 'bg-zinc-900' : 'bg-white-50'
-              } ${dayData && themeTypes.includes(dayData.type) ? 'text-zinc-300': 'text-zinc-600'}`}
+							className={`z-50 block w-max rounded-full px-3 py-1.5 font-bold tracking-wide shadow-md transition-transform active:scale-90 sm:hover:scale-90 sm:active:scale-75 ${
+								dayData && themeTypes.includes(dayData.type)
+									? 'bg-zinc-900'
+									: 'bg-white-50'
+							} ${dayData && themeTypes.includes(dayData.type) ? 'text-zinc-300' : 'text-zinc-600'}`}
 							onClick={() => {
 								setTakeover(false)
 								setClip(false)
@@ -135,10 +140,10 @@ const Calendar = ({ data }: { data: MonthDataType[] }) => {
 						{dayData?.content.map((contentItem, contentIndex: number) => (
 							<Fragment key={`${contentItem.type}-${contentIndex}`}>
 								{contentItem.type === 'TextBlock' && (
-								  <TextBlock
-                  content={contentItem.text}
-									themeData={dayData.type as MonthDataType["days"][0]["type"]}
-								  />
+									<TextBlock
+										content={contentItem.text}
+										themeData={dayData.type as MonthDataType['days'][0]['type']}
+									/>
 								)}
 								{contentItem.type === 'Image' && (
 									<Gallery
@@ -150,7 +155,10 @@ const Calendar = ({ data }: { data: MonthDataType[] }) => {
 									/>
 								)}
 								{contentItem.type === 'LinkButton' && (
-									<CalendarButton data={contentItem.link} themeData={dayData.type as MonthDataType["days"][0]["type"]} />
+									<CalendarButton
+										data={contentItem.link}
+										themeData={dayData.type as MonthDataType['days'][0]['type']}
+									/>
 								)}
 							</Fragment>
 						))}
@@ -175,7 +183,7 @@ const Calendar = ({ data }: { data: MonthDataType[] }) => {
 							}, 300)
 						}}
 						className={cn(
-							'block size-9 rounded-[9px] transition-all duration-150 hover:scale-90 active:scale-75 min-[400px]:size-10 min-[400px]:rounded-[10px]',
+							'block h-9 w-full rounded-[9px] transition-all duration-150 hover:scale-90 active:scale-75 min-[400px]:size-10 min-[400px]:rounded-[10px]',
 							bgColors(dayData.type),
 							{
 								'scale-[20] cursor-default duration-300 hover:scale-[20] active:scale-[20]':
@@ -205,7 +213,7 @@ const Calendar = ({ data }: { data: MonthDataType[] }) => {
 		<div
 			key={key}
 			className={cn(
-				'size-9 rounded-[9px] min-[400px]:size-10 min-[400px]:rounded-[10px] delay-100 duration-300 transition-all flex items-center justify-center',
+				'h-9 w-full rounded-[9px] min-[400px]:size-10 min-[400px]:rounded-[10px] delay-100 duration-300 transition-all flex items-center justify-center',
 				{
 					'bg-zinc-700/20': !isCurrentMonth,
 					'bg-zinc-700/60': isCurrentMonth,
@@ -256,14 +264,6 @@ const Calendar = ({ data }: { data: MonthDataType[] }) => {
 			blankTiles.shift()
 		}
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-    // useEffect(() => {
-    //   const pickedDays = monthData.days.filter(
-    //     (day) => day.content.length > 0 && day.type && day.day <= monthDays
-    //   );
-    //   bunnyLog.info('dayData', pickedDays.map(day => day.type));
-    // }, [data]);
-
 		return (
 			<section
 				key={monthIndex}
@@ -278,11 +278,11 @@ const Calendar = ({ data }: { data: MonthDataType[] }) => {
 				ref={clickOutsideRef}
 			>
 				<h2
-          className={`reveal animate-revealSm text-sm font-bold tracking-wider text-white-200 ${takeover && 'invisible '}`}
-          >
+					className={`reveal animate-revealSm text-sm font-bold tracking-wider text-white-200 ${takeover && 'invisible '}`}
+				>
 					{dayjs(currentMonth).format('MMMM')}
 				</h2>
-				<div className='grid w-max grid-cols-7 gap-2 min-[400px]:w-full'>
+				<div className='grid w-full grid-cols-7 gap-2 min-[400px]:w-full'>
 					{blankTiles.map((day, index) =>
 						renderInactiveTile(day, `blank-${index}`, false)
 					)}

@@ -2,8 +2,6 @@ import { OutlineExpand } from 'icons/Icons'
 import Image, { type StaticImageData } from 'next/image'
 import type { MouseEventHandler } from 'react'
 
-//FIXME: dark theme colors
-
 const Gallery = (props: {
 	image: StaticImageData
 	onClick: MouseEventHandler<HTMLButtonElement>
