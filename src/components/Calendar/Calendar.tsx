@@ -22,6 +22,7 @@ const Calendar = ({ data }: { data: MonthDataType[] }) => {
 	const [clip, setClip] = useState(false);
 	const [loadIn, setLoadIn] = useState(true);
 	const [modal, setModal] = useState(false);
+	const [activeTile, setActiveTile] = useState<number | null>(null);
 
 	const [modalImage, setModalImage] = useState<string | StaticImageData>(
 		placeholder,
@@ -32,6 +33,7 @@ const Calendar = ({ data }: { data: MonthDataType[] }) => {
 			setTakeover(false);
 			setClip(false);
 			setCalBgColor("none");
+			setActiveTile(null);
 		}
 	});
 
@@ -98,119 +100,124 @@ const Calendar = ({ data }: { data: MonthDataType[] }) => {
 		dayData,
 		index,
 		globalIndex,
-		active,
-		setActive,
 		isCurrentMonth,
 	}: {
 		day: number;
 		dayData?: DayData;
 		index: number;
 		globalIndex: number;
-		active: boolean;
-		setActive: React.Dispatch<React.SetStateAction<boolean>>;
 		isCurrentMonth: boolean;
-	}) => (
-		<div
-			key={index}
-			className={cn({
-				"scaleFade animate-scaleFade": loadIn,
-			})}
-			style={{
-				animationDelay: `${globalIndex / 50 + 0.04}s`,
-			}}
-		>
-			{takeover && active && (
-				<div className="absolute inset-0 z-50 flex flex-col overflow-y-auto p-4">
-					<div className="sticky top-0 z-10 self-start">
+	}) => {
+		const active = activeTile === index;
+
+		return (
+			<div
+				key={index}
+				className={cn({
+					"scaleFade animate-scaleFade": loadIn,
+				})}
+				style={{
+					animationDelay: `${globalIndex / 50 + 0.04}s`,
+				}}
+			>
+				{takeover && active && (
+					<div className="absolute inset-0 z-50 flex flex-col overflow-y-auto p-4">
+						<div className="sticky top-0 z-10 self-start">
+							<button
+								className={`z-50 block w-max rounded-full px-3 py-1.5 font-bold tracking-wide shadow-md transition-transform active:scale-90 sm:hover:scale-90 sm:active:scale-75 ${
+									dayData && themeTypes.includes(dayData.type)
+										? "bg-zinc-900"
+										: "bg-white-50"
+								} ${dayData && themeTypes.includes(dayData.type) ? "text-zinc-300" : "text-zinc-600"}`}
+								onClick={() => {
+									setTakeover(false);
+									setClip(false);
+									setCalBgColor("none");
+									setActiveTile(null);
+								}}
+								type="button"
+							>
+								back
+							</button>
+						</div>
+						<ul className="relative flex w-full flex-col gap-2 mt-4">
+							{dayData?.content.map((contentItem, contentIndex: number) => (
+								<Fragment key={`${contentItem.type}-${contentIndex}`}>
+									{contentItem.type === "TextBlock" && (
+										<TextBlock
+											content={contentItem.text}
+											themeData={
+												dayData.type as MonthDataType["days"][0]["type"]
+											}
+										/>
+									)}
+									{contentItem.type === "Image" && (
+										<Gallery
+											image={contentItem.image || placeholder}
+											onClick={() => {
+												setModal(true);
+												setModalImage(contentItem.image || placeholder);
+											}}
+										/>
+									)}
+									{contentItem.type === "LinkButton" && (
+										<CalendarButton
+											data={contentItem.link}
+											themeData={
+												dayData.type as MonthDataType["days"][0]["type"]
+											}
+										/>
+									)}
+								</Fragment>
+							))}
+						</ul>
+					</div>
+				)}
+				{dayData ? (
+					<div
+						className={cn("group/tooltip relative delay-100", {
+							"invisible opacity-0 delay-0": takeover && !active,
+							"overflow-clip": clip,
+						})}
+					>
+						<Tooltip text={dayData.type} state={takeover} />
 						<button
-							className={`z-50 block w-max rounded-full px-3 py-1.5 font-bold tracking-wide shadow-md transition-transform active:scale-90 sm:hover:scale-90 sm:active:scale-75 ${
-								dayData && themeTypes.includes(dayData.type)
-									? "bg-zinc-900"
-									: "bg-white-50"
-							} ${dayData && themeTypes.includes(dayData.type) ? "text-zinc-300" : "text-zinc-600"}`}
 							onClick={() => {
-								setTakeover(false);
-								setClip(false);
-								setCalBgColor("none");
+								setTakeover(true);
+								handleClip();
+								setActiveTile(index);
+								setTimeout(() => {
+									setCalBgColor(dayData.type);
+								}, 300);
 							}}
+							className={cn(
+								"block h-9 w-full rounded-[9px] transition-all duration-150 hover:scale-90 active:scale-75 min-[400px]:size-10 min-[400px]:rounded-[10px]",
+								bgColors(dayData.type),
+								{
+									"scale-[20] cursor-default duration-300 hover:scale-[20] active:scale-[20]":
+										active && takeover,
+								},
+							)}
 							type="button"
 						>
-							back
+							<span
+								className={`pointer-events-none duration-0 text-center ${active && takeover ? "opacity-0" : "opacity-100"} ${textColor(dayData?.type)}`}
+							>
+								{dayData?.day || day}
+							</span>
 						</button>
 					</div>
-					<ul className="relative flex w-full flex-col gap-2 mt-4">
-						{dayData?.content.map((contentItem, contentIndex: number) => (
-							<Fragment key={`${contentItem.type}-${contentIndex}`}>
-								{contentItem.type === "TextBlock" && (
-									<TextBlock
-										content={contentItem.text}
-										themeData={dayData.type as MonthDataType["days"][0]["type"]}
-									/>
-								)}
-								{contentItem.type === "Image" && (
-									<Gallery
-										image={contentItem.image || placeholder}
-										onClick={() => {
-											setModal(true);
-											setModalImage(contentItem.image || placeholder);
-										}}
-									/>
-								)}
-								{contentItem.type === "LinkButton" && (
-									<CalendarButton
-										data={contentItem.link}
-										themeData={dayData.type as MonthDataType["days"][0]["type"]}
-									/>
-								)}
-							</Fragment>
-						))}
-					</ul>
-				</div>
-			)}
-			{dayData ? (
-				<div
-					className={cn("group/tooltip relative delay-100", {
-						"invisible opacity-0 delay-0": takeover && !active,
-						"overflow-clip": clip,
-					})}
-				>
-					<Tooltip text={dayData.type} state={takeover} />
-					<button
-						onClick={() => {
-							setTakeover(true);
-							handleClip();
-							setActive(true);
-							setTimeout(() => {
-								setCalBgColor(dayData.type);
-							}, 300);
-						}}
-						className={cn(
-							"block h-9 w-full rounded-[9px] transition-all duration-150 hover:scale-90 active:scale-75 min-[400px]:size-10 min-[400px]:rounded-[10px]",
-							bgColors(dayData.type),
-							{
-								"scale-[20] cursor-default duration-300 hover:scale-[20] active:scale-[20]":
-									active && takeover,
-							},
-						)}
-						type="button"
-					>
-						<span
-							className={`pointer-events-none duration-0 text-center ${active && takeover ? "opacity-0" : "opacity-100"} ${textColor(dayData?.type)}`}
-						>
-							{dayData?.day || day}
-						</span>
-					</button>
-				</div>
-			) : (
-				renderInactiveTile(
-					day,
-					`inactive-${index}`,
-					globalIndex,
-					isCurrentMonth,
-				)
-			)}
-		</div>
-	);
+				) : (
+					renderInactiveTile(
+						day,
+						`inactive-${index}`,
+						globalIndex,
+						isCurrentMonth,
+					)
+				)}
+			</div>
+		);
+	};
 
 	const renderInactiveTile = (
 		day: number,
@@ -312,15 +319,11 @@ const Calendar = ({ data }: { data: MonthDataType[] }) => {
 						renderInactiveTile(day, `prev-${index}`, globalIndex++, false),
 					)}
 					{tiles.map((day, index) => {
-						const dayData = monthData.days.find((d) => d.day === day);
-						const [active, setActive] = useState(false);
 						return renderTile({
 							day,
-							dayData,
+							dayData: monthData.days.find((d) => d.day === day),
 							index,
 							globalIndex: globalIndex++,
-							active,
-							setActive,
 							isCurrentMonth: true,
 						});
 					})}
