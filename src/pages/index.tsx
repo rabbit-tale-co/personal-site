@@ -11,7 +11,9 @@ const data24 = [mayData, aprilData, marchData, februaryData]
 const Page = () => (
 	<Layout>
 		<Tag year='2024' />
-	  {data24.map((data, index) => <Calendar data={data} key={index.toString()} />)}
+		{data24.map((data, index) => (
+			<Calendar data={data} key={index.toString()} />
+		))}
 		{/* <Tag year="2023" />
     <Calendar data={decemberData} /> */}
 	</Layout>
