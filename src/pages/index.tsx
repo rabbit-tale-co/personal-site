@@ -5,8 +5,9 @@ import { marchData } from 'lib/activity/2024/mar'
 import { februaryData } from 'lib/activity/2024/feb'
 import { aprilData } from 'lib/activity/2024/apr'
 import { mayData } from 'lib/activity/2024/may'
+import { augData } from 'lib/activity/2024/aug'
 
-const data24 = [mayData, aprilData, marchData, februaryData]
+const data24 = [augData, mayData, aprilData, marchData, februaryData]
 
 const Page = () => (
 	<Layout>
