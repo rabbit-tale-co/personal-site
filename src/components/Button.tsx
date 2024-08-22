@@ -4,23 +4,30 @@ import { cn } from 'utils/tw'
 import Garnish from './Garnish'
 
 type ButtonProps = {
-  aria?: string
-  as?: 'a' | 'button'
-  children?: React.ReactNode
-  className?: string
-  external?: boolean
-  garnish?: boolean
-  href?: string
-  onClick?: () => void
-  state?: boolean
-  title: string
-  type?: 'submit' | 'reset' | 'button' | undefined
-  size?: 'sm' | 'md' | 'lg'
-  disabled?: boolean
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'accent' | 'link' | 'icon'
-  hasIcon?: boolean
-  iconPosition?: 'left' | 'right'
-  rounded?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full'
+	aria?: string
+	as?: 'a' | 'button'
+	children?: React.ReactNode
+	className?: string
+	external?: boolean
+	garnish?: boolean
+	href?: string
+	onClick?: () => void
+	state?: boolean
+	title: string
+	type?: 'submit' | 'reset' | 'button' | undefined
+	size?: 'sm' | 'md' | 'lg'
+	disabled?: boolean
+	variant?:
+		| 'primary'
+		| 'secondary'
+		| 'outline'
+		| 'ghost'
+		| 'accent'
+		| 'link'
+		| 'icon'
+	hasIcon?: boolean
+	iconPosition?: 'left' | 'right'
+	rounded?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full'
 }
 
 // interface ButtonProps {
@@ -104,50 +111,50 @@ type ButtonProps = {
 // )
 
 const Button = ({
-  as,
-  aria,
-  children,
-  className,
-  external,
-  garnish = false,
-  href,
-  onClick,
-  state,
-  title,
-  type,
-  variant = 'primary',
+	as,
+	aria,
+	children,
+	className,
+	external,
+	garnish = false,
+	href,
+	onClick,
+	state,
+	title,
+	type,
+	variant = 'primary',
 }: ButtonProps) => {
-    const Component = as ?? Link
+	const Component = as ?? Link
 
-    return (
-      <Component
-        aria-label={aria ?? title}
-        className={cn(
-          'group flex w-max items-center justify-center gap-2.5 rounded-full px-4 py-2.5 active:scale-95 sm:transition-all',
-          {
-            'bg-white-50 font-[550] text-zinc-700': variant === 'primary',
-            'bg-white-50': variant === 'primary' && state,
+	return (
+		<Component
+			aria-label={aria ?? title}
+			className={cn(
+				'group flex w-max items-center justify-center gap-2.5 rounded-full px-4 py-2.5 active:scale-95 transition-all',
+				{
+					'bg-white-50 font-[550] text-zinc-700': variant === 'primary',
+					'bg-white-50': variant === 'primary' && state,
 
-            'bg-transparent font-medium text-zinc-600 sm:hover:bg-white-50':
-              variant === 'secondary',
-            'bg-white-50 text-zinc-800': variant === 'secondary' && state,
+					'bg-transparent font-medium text-zinc-600 sm:hover:bg-white-50':
+						variant === 'secondary',
+					'bg-white-50 text-zinc-800': variant === 'secondary' && state,
 
-            'bg-red-500': variant === 'accent',
-            'bg-red-600': variant === 'accent' && state,
-          },
-          className
-        )}
-        href={href || ''}
-        onClick={onClick}
-        rel={external ? 'noopener noreferrer' : undefined}
-        target={external ? '_blank' : undefined}
-        type={type}
-      >
-        {title}
-        {children}
-        {garnish && <Garnish />}
-      </Component>
-    )
-	}
+					'bg-red-500': variant === 'accent',
+					'bg-red-600': variant === 'accent' && state,
+				},
+				className
+			)}
+			href={href || ''}
+			onClick={onClick}
+			rel={external ? 'noopener noreferrer' : undefined}
+			target={external ? '_blank' : undefined}
+			type={type}
+		>
+			{title}
+			{children}
+			{garnish && <Garnish />}
+		</Component>
+	)
+}
 
 export default Button
