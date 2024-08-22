@@ -2,7 +2,7 @@ import type { MonthDataType } from 'lib/activity/activityTypes'
 
 export const aprilData: MonthDataType[] = [
 	{
-		month: 3,
+		month: 4,
 		year: 2024,
 		days: [
 			{

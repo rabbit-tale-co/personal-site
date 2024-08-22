@@ -4,7 +4,7 @@ import tinyBudiesMock from 'public/images/feb-2024/tiny_buddies_mock.webp'
 
 export const marchData: MonthDataType[] = [
 	{
-		month: 2,
+		month: 3,
 		year: 2024,
 		days: [
 			{
