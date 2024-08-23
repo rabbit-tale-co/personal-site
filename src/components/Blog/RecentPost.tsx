@@ -56,7 +56,7 @@ const RecentPost = ({
 			onMouseEnter={setActivePost}
 		>
 			<article
-				className='group relative aspect-video w-full origin-center overflow-hidden rounded-3xl bg-white-50 shadow-xl transition-all duration-300 ease-bounce will-change-transform after:absolute after:left-0 after:top-0 after:h-full after:w-full after:rounded-3xl after:border-[6px] after:border-white-50/20 after:transition-[border] sm:aspect-[4/3] sm:h-40 sm:hover:!rotate-0 sm:hover:scale-110 sm:hover:shadow-2xl sm:hover:after:border-8 sm:active:scale-100 sm:active:after:border-[12px]'
+				className='group relative aspect-video w-full origin-center overflow-hidden rounded-3xl bg-white shadow-xl transition-all duration-300 ease-bounce will-change-transform after:absolute after:left-0 after:top-0 after:h-full after:w-full after:rounded-3xl after:border-[6px] after:border-white/20 after:transition-[border] sm:aspect-[4/3] sm:h-40 sm:hover:!rotate-0 sm:hover:scale-110 sm:hover:shadow-2xl sm:hover:after:border-8 sm:active:scale-100 sm:active:after:border-[12px]'
 				style={{ transform: `rotate(${rotation}deg)` }}
 			>
 				{/* active dot */}
@@ -69,7 +69,7 @@ const RecentPost = ({
 					)}
 				>
 					<div className='absolute left-0 top-0 size-12 bg-black/25 blur-xl' />
-					<div className='absolute left-1/2 top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white-50 after:absolute after:h-full after:w-full after:animate-ping after:rounded-full after:bg-white-50' />
+					<div className='absolute left-1/2 top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white after:absolute after:h-full after:w-full after:animate-ping after:rounded-full after:bg-white' />
 				</div>
 
 				<Image

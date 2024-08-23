@@ -1,8 +1,17 @@
 import { cn } from 'utils/tw'
 import type { CSSProperties, SVGProps } from 'react'
 
+type Range<
+	N extends number,
+	Result extends Array<unknown> = [],
+> = Result['length'] extends N
+	? Result[number]
+	: Range<N, [...Result, Result['length']]>
+
+type ValueRange = Range<101>
+
 export interface GaugeProps extends Omit<SVGProps<SVGSVGElement>, 'className'> {
-	value: number
+	value: ValueRange
 	size?: number | string
 	gapPercent?: number
 	strokeWidth?: number
@@ -65,18 +74,14 @@ export function Gauge({
 	showValue = true,
 	displayMode = 'percent',
 	max,
-
 	primary,
 	secondary,
-
 	transition = {
 		length: 1000, // ms
 		step: 200, // ms
 		delay: 0, // ms
 	},
-
 	className,
-
 	...props
 }: GaugeProps) {
 	const strokePercent = value // %
@@ -217,7 +222,7 @@ export function Gauge({
 	const secondaryStroke = () => {
 		// Default gray
 		if (!secondary) {
-			return 'hsl(var(--ds-gray-400))'
+			return 'hsl(240, 6%, 90%)'
 		}
 
 		// Specific default color or custom color
@@ -363,7 +368,7 @@ export function Gauge({
 					dominantBaseline='middle'
 					alignmentBaseline='central'
 					fill='currentColor'
-					fontSize={36}
+					fontSize={28}
 					className={cn(
 						typeof className === 'object' && className?.textClassName
 					)}

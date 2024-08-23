@@ -15,100 +15,13 @@ type ButtonProps = {
 	state?: boolean
 	title: string
 	type?: 'submit' | 'reset' | 'button' | undefined
-	size?: 'sm' | 'md' | 'lg'
+	size?: 'xs' | 'sm' | 'md' | 'lg'
 	disabled?: boolean
-	variant?:
-		| 'primary'
-		| 'secondary'
-		| 'outline'
-		| 'ghost'
-		| 'accent'
-		| 'link'
-		| 'icon'
+	variant?: 'primary' | 'secondary' | 'outline' | 'accent' | 'danger'
 	hasIcon?: boolean
 	iconPosition?: 'left' | 'right'
 	rounded?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full'
 }
-
-// interface ButtonProps {
-// 	as?: 'a' | 'button'
-// 	hasIcon?: boolean
-// 	iconPosition?: 'left' | 'right'
-// 	aria?: string
-// 	isStickyHover?: boolean | undefined
-// 	children?: React.ReactNode
-// 	external?: boolean
-// 	href?: LinkProps['href']
-// 	onClick?: () => void
-// 	onKeyUp?: (
-// 		e: React.KeyboardEvent<HTMLButtonElement | HTMLAnchorElement>
-// 	) => void
-// 	state?: boolean
-// 	text?: string
-// 	className?: string
-// 	variant:
-// 		| 'primary'
-// 		| 'secondary'
-// 		| 'outline'
-// 		| 'ghost'
-// 		| 'icon'
-// 		| 'accent'
-// 		| 'link'
-// 	rounded?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full'
-// 	size?: 'sm' | 'md' | 'lg'
-// 	disabled?: boolean
-// 	type?: 'button' | 'submit' | 'reset'
-// }
-
-// const style = cn(
-//   'group w-max overflow-hidden relative px-4 py-2 sm:transition-all block',
-//   {
-//     'active:scale-95': props.variant !== 'link' && !props.disabled,
-
-//     'bg-default-900 text-default-50 dark:bg-default-50 dark:text-default-900 sm:hover:bg-default-900 dark:sm:hover:bg-default-100':
-//       props.variant === 'primary',
-
-//     'bg-default-900/5': props.variant === 'primary' && props.state,
-
-//     'bg-default-900/5 dark:bg-default-50/5 text-default-950 dark:text-white-50 sm:hover:bg-default-100 dark:sm:hover:bg-default-50/10':
-//       props.variant === 'secondary',
-
-//     'ring-2 ring-shark-100 hover:ring-shark-950/10 hover:bg-shark-950/5':
-//       props.variant === 'outline',
-
-//     '!px-2 sm:hover:bg-white': props.variant === 'icon',
-
-//     'bg-transparent text-shark-500 dark:text-shark-300 sm:hover:bg-shark-950/5 dark:sm:hover:bg-shark-50/5':
-//       props.variant === 'ghost' || props.variant === 'icon',
-
-//     'bg-white-950/5 dark:bg-shark-50/5 text-shark-950 dark:text-shark-50':
-//       (props.variant === 'ghost' || props.variant === 'icon') &&
-//       props.state,
-
-//     'bg-blueberry-500 text-blueberry-50 dark:bg-blueberry-50 dark:text-blueberry-950 sm:hover:bg-blueberry-600 dark:sm:hover:bg-blueberry-100':
-//       props.variant === 'accent',
-
-//     'p-0 text-shark-500': props.variant === 'link',
-
-//     'flex items-center justify-center gap-2.5': props.children,
-
-//     'text-xs': size === 'sm',
-//     'text-sm sm:text-base': size === 'md',
-//     'text-base sm:text-lg py-2.5 px-5': size === 'lg',
-
-//     'pl-5': hasIcon && iconPosition === 'right' && props.variant !== 'link',
-//     'pr-5': hasIcon && iconPosition === 'left' && props.variant !== 'link',
-
-//     'cursor-not-allowed opacity-50': props.disabled,
-
-//     'rounded-sm': rounded === 'sm',
-//     'rounded-md': rounded === 'md',
-//     'rounded-lg': rounded === 'lg',
-//     'rounded-xl': rounded === 'xl',
-//     'rounded-2xl': rounded === '2xl',
-//     'rounded-full': rounded === 'full',
-//   }
-// )
 
 const Button = ({
 	as,
@@ -123,32 +36,47 @@ const Button = ({
 	title,
 	type,
 	variant = 'primary',
+	size = 'sm',
+	disabled = false, // Ensure button is disabled correctly
 }: ButtonProps) => {
-	const Component = as ?? Link
+	const Component = as ?? (href ? 'a' : 'button') // Default to 'button' if href is not provided
+	const buttonType = href ? undefined : type ?? 'button' // Set type to 'button' if href is not provided and type is not specified
 
 	return (
 		<Component
 			aria-label={aria ?? title}
 			className={cn(
-				'group flex w-max items-center justify-center gap-2.5 rounded-full px-4 py-2.5 active:scale-95 transition-all',
+				'group flex w-max cursor-pointer items-center justify-center gap-2.5 rounded-full px-4 py-2.5 active:scale-95 transition-all',
 				{
-					'bg-white-50 font-[550] text-zinc-700': variant === 'primary',
-					'bg-white-50': variant === 'primary' && state,
+					'bg-white font-[550] text-zinc-700': variant === 'primary',
+					'bg-white': variant === 'primary' && state,
 
-					'bg-transparent font-medium text-zinc-600 sm:hover:bg-white-50':
+					'bg-transparent font-medium text-zinc-600 sm:hover:bg-white':
 						variant === 'secondary',
-					'bg-white-50 text-zinc-800': variant === 'secondary' && state,
+					'bg-white text-zinc-800': variant === 'secondary' && state,
 
-					'bg-red-500': variant === 'accent',
-					'bg-red-600': variant === 'accent' && state,
+					'bg-zinc-900 font-medium text-zinc-50 sm:hover:bg-zinc-800':
+						variant === 'accent',
+
+					'bg-red-500 font-medium text-white sm:hover:bg-red-600':
+						variant === 'danger',
+
+					'bg-transparent outline outline-1 outline-zinc-300':
+						variant === 'outline',
+
+					'text-xs': size === 'xs',
+					'text-sm': size === 'sm',
+					'text-base': size === 'md',
+					'text-lg': size === 'lg',
 				},
 				className
 			)}
-			href={href || ''}
+			href={href}
 			onClick={onClick}
 			rel={external ? 'noopener noreferrer' : undefined}
 			target={external ? '_blank' : undefined}
-			type={type}
+			type={buttonType} // This ensures the button works with forms
+			disabled={disabled} // Properly handle the disabled state
 		>
 			{title}
 			{children}

@@ -4,6 +4,12 @@ export { SolidLogoText } from './assets/logo/logo_text'
 //User Inferface
 
 export {
+	OutlineSend,
+	SolidSend,
+	DuotoneSend,
+} from './assets/user_interface/Send'
+
+export {
 	OutlineStar,
 	SolidStar,
 	DuotoneStar,
@@ -160,6 +166,12 @@ export {
 } from './assets/shopping_and_ecommerce/Receipt'
 
 // Socials
+
+export {
+	OutlineDiscord,
+	SolidDiscord,
+	DuotoneDiscord,
+} from './assets/socials/Discord'
 
 export {
 	OutlineWindows,
