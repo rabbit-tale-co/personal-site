@@ -16,7 +16,6 @@ import DrawingCanvas, { type DrawingCanvasRef } from './DrawingCanvas'
 import {
 	Form,
 	FormControl,
-	FormDescription,
 	FormField,
 	FormItem,
 	FormLabel,
@@ -54,7 +53,7 @@ export function DrawerDialogDemo() {
 						twitter account.
 					</DialogDescription>
 				</DialogHeader>
-				<ProfileForm />
+				<ProfileForm setOpen={setOpen} />
 			</DialogContent>
 		</Dialog>
 	)
@@ -72,7 +71,13 @@ const FormSchema = z.object({
 	drawing: z.string().optional(),
 })
 
-function ProfileForm({ className }: React.ComponentProps<'form'>) {
+function ProfileForm({
+	className,
+	setOpen,
+}: {
+	className?: string
+	setOpen: React.Dispatch<React.SetStateAction<boolean>>
+}) {
 	const form = useForm<z.infer<typeof FormSchema>>({
 		resolver: zodResolver(FormSchema),
 	})
@@ -100,7 +105,10 @@ function ProfileForm({ className }: React.ComponentProps<'form'>) {
 
 		toast.promise(saveMessage(), {
 			loading: 'Saving your message...',
-			success: 'Message sent successfully!',
+			success: () => {
+				setOpen(false) // Close the dialog after a successful submission
+				return 'Message sent successfully!'
+			},
 			error: 'Error sending message',
 		})
 	}
@@ -157,3 +165,5 @@ function ProfileForm({ className }: React.ComponentProps<'form'>) {
 		</Form>
 	)
 }
+
+export default ProfileForm
