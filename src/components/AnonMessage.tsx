@@ -63,8 +63,8 @@ export function DrawerDialogDemo() {
 const FormSchema = z.object({
 	message: z
 		.string()
-		.min(10, {
-			message: 'Message must be at least 10 characters.',
+		.min(2, {
+			message: 'Message must be at least 2 characters.',
 		})
 		.max(300, {
 			message: 'Message must not be longer than 300 characters.',
@@ -168,16 +168,13 @@ function ProfileForm({ className }: React.ComponentProps<'form'>) {
 									{...field}
 								/>
 							</FormControl>
-							<FormDescription>
-								You can <span>@mention</span> other users and organizations.
-							</FormDescription>
 							<FormMessage />
 						</FormItem>
 					)}
 				/>
 
 				<div className='flex gap-2 place-self-end'>
-					<Button variant={'outline'} title={'Cancel'} />
+					{/* <Button variant={'outline'} title={'Cancel'} /> */}
 					<Button type='submit' variant={'accent'} title={'Submit'} />
 				</div>
 			</form>
