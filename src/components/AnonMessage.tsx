@@ -87,16 +87,17 @@ function ProfileForm({ className }: React.ComponentProps<'form'>) {
 			canvasImage = canvas.getDataURL()
 			data.drawing = canvasImage
 		} else {
-			console.error('Canvas is not initialized or getDataURL method is missing')
+			bunnyLog.error(
+				'Canvas is not initialized or getDataURL method is missing'
+			)
 		}
-		console.log('Form submitted:', data)
 
 		try {
 			const docRef = doc(db, 'anonymousMessages', `msg_${Date.now()}`)
 			setDoc(docRef, data)
 				.then(() => {
 					bunnyLog.info('Document written with ID: ', docRef.id)
-					toast('Message sent successfully!', {
+					toast.success('Message sent successfully!', {
 						description: (
 							<div>
 								<pre className='mt-2 w-full rounded-md bg-slate-950 p-4'>
@@ -119,7 +120,7 @@ function ProfileForm({ className }: React.ComponentProps<'form'>) {
 				})
 				.catch((error) => {
 					bunnyLog.error('Error adding document: ', error)
-					toast('Error sending message', {
+					toast.error('Error sending message', {
 						description: 'An error occurred while sending your message.',
 					})
 				})
