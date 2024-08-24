@@ -33,6 +33,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 		props: {
 			messages,
 		},
+		revalidate: 60 * 15, // 15 minutes
 	}
 }
 
