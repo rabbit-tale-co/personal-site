@@ -1,4 +1,4 @@
-import type { GetServerSideProps } from 'next'
+import type { GetServerSideProps, GetStaticProps } from 'next'
 import type React from 'react'
 import Image from 'next/image'
 import { getDocs, collection, deleteDoc, doc } from 'firebase/firestore'
@@ -20,7 +20,7 @@ interface MessagesPageProps {
 	messages: Message[]
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
 	const querySnapshot = await getDocs(collection(db, 'anonymousMessages'))
 	const messages = querySnapshot.docs
 		.map((doc) => ({
@@ -33,7 +33,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 		props: {
 			messages,
 		},
-		revalidate: 60 * 15, // 15 minutes
+		revalidate: 60 * 5,
 	}
 }
 
