@@ -35,6 +35,10 @@ const MetaTagsProvider = ({
 			key='og:url'
 			content='https://portfolio.rabbittale.co'
 		/>
+
+		<meta property='twitter:title' content={title} />
+		<meta property='twitter:description' content={description} />
+		<meta property='twitter:image' content={ogImage} />
 		<meta
 			name='twitter:image:alt'
 			key='twitter:image:alt'
