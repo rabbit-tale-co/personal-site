@@ -8,7 +8,7 @@ type GarnishProps = {
 const Garnish = ({ className }: GarnishProps) => (
 	<span
 		className={cn(
-			'relative flex size-4 items-center justify-center overflow-hidden *:transition-transform *:duration-[400ms] *:ease-bounce',
+			'relative flex size-4 items-center justify-center overflow-hidden *:transition-transform *:duration-&lsqb;400ms&rsqb; *:ease-bounce',
 			className
 		)}
 	>
