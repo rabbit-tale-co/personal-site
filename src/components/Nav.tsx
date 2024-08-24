@@ -5,34 +5,71 @@ import { useState } from 'react'
 import { cn } from 'utils/tw'
 import Splt from 'react-spltjs'
 import type { LinkProps } from 'next/link'
-import { SolidLogo } from 'src/icons/Icons'
+import {
+	OutlineDiscord,
+	OutlineMail,
+	OutlineSend,
+	OutlineTwitter,
+	SolidLogo,
+} from 'src/icons/Icons'
+import { DrawerDialogDemo } from './AnonMessage'
 
 type MenuItemProps = {
 	external?: boolean
-	href: LinkProps['href']
+	href?: LinkProps['href']
 	title: string
+	icon?: React.ReactNode
+	onClick?: () => void
 }
 
-const MenuItem = ({ external = true, href, title }: MenuItemProps) => (
+const MenuItem = ({
+	external = true,
+	href,
+	title,
+	icon,
+	onClick,
+}: MenuItemProps) => (
 	<li>
-		<Link
-			aria-label={title}
-			className='block rounded-xl px-3 transition-colors py-2 font-medium text-zinc-700 sm:hover:bg-zinc-100'
-			href={href}
-			rel={external ? 'noopener noreferrer' : undefined}
-			target={external ? '_blank' : undefined}
-		>
-			{title}
-		</Link>
+		{onClick ? (
+			<button
+				aria-label={title}
+				className='flex w-full items-center gap-2 rounded-xl px-3 transition-colors py-2 font-medium text-zinc-700 sm:hover:bg-zinc-100'
+				onClick={onClick}
+				type='button'
+			>
+				{icon}
+				{title}
+			</button>
+		) : (
+			<Link
+				aria-label={title}
+				className='flex items-center gap-2 rounded-xl px-3 transition-colors py-2 font-medium text-zinc-700 sm:hover:bg-zinc-100'
+				href={href || ''}
+				rel={external ? 'noopener noreferrer' : undefined}
+				target={external ? '_blank' : undefined}
+			>
+				{icon}
+				{title}
+			</Link>
+		)}
 	</li>
 )
 
 const Nav = () => {
 	const [open, setOpen] = useState(false)
+	const [isModalOpen, setIsModalOpen] = useState(false)
 
 	const menuRef = useClickOutside(() => {
 		setOpen(false)
 	}) as React.RefObject<HTMLDivElement>
+
+	const handleModalOpen = () => {
+		setIsModalOpen(true)
+	}
+
+	const handleModalClose = () => {
+		setIsModalOpen(false)
+	}
 
 	return (
 		<header className='relative z-20 mt-6 flex w-full items-center justify-center px-4 sm:mt-16 sm:px-10'>
@@ -55,7 +92,7 @@ const Nav = () => {
 							ease='bounce'
 						/>
 					</span>
-					{/* <SolidLogoText size={96} className="text-shark-950 dark:text-white-50" /> */}
+					{/* <SolidLogoText size={96} className="text-shark-950 dark:text-white" /> */}
 				</Link>
 				<nav className='flex space-x-2'>
 					<Button
@@ -76,7 +113,7 @@ const Nav = () => {
 						/>
 						<ul
 							className={cn(
-								'invisible absolute right-0 top-14 block w-36 min-w-max origin-top-right scale-75 rounded-2xl bg-white-50 p-1 opacity-0 shadow-lg duration-150 ease-in-out dark:bg-[#2b2b2b]',
+								'invisible absolute right-0 top-14 block w-36 min-w-max origin-top-right scale-75 rounded-2xl bg-white p-1 opacity-0 shadow-lg duration-150 ease-in-out dark:bg-[#2b2b2b]',
 								{ 'visible scale-100 opacity-100': open }
 							)}
 							onClick={() => setOpen(!open)}
@@ -84,16 +121,27 @@ const Nav = () => {
 								if (e.key === 'Enter') setOpen(!open)
 							}}
 						>
-							<MenuItem title='Twitter' href='https://twitter.com/Hasiradoo' />
 							<MenuItem
-								title='Bsky'
-								href='https://bsky.app/profile/starowl.social'
+								title='Twitter'
+								href='https://twitter.com/Hasiradoo'
+								icon={<OutlineTwitter size={20} />}
 							/>
-							<MenuItem title='Telegram' href='https://t.me/hasiradoo' />
+							<MenuItem
+								title='Telegram'
+								href='https://t.me/hasiradoo'
+								icon={<OutlineSend size={20} />}
+							/>
 							<MenuItem
 								title='Discord'
 								href='https://discord.com/users/569975072417251378'
+								icon={<OutlineDiscord size={20} />}
 							/>
+							<DrawerDialogDemo />
+							{/* <MenuItem
+								title='Message'
+								icon={<OutlineMail size={20} />}
+								onClick={handleModalOpen}
+							/> */}
 						</ul>
 					</div>
 				</nav>

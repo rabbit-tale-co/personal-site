@@ -9,7 +9,7 @@ const WindowsMode = () => {
 		<React.Fragment>
 			<div
 				className={cn(
-					'fixed left-0 top-0 z-50 hidden h-screen w-full bg-blue-500 text-white-50',
+					'fixed left-0 top-0 z-30 hidden h-screen w-full bg-blue-500 text-white',
 					{ 'block animate-fadeSm': active }
 				)}
 			>
@@ -107,8 +107,8 @@ const WindowsMode = () => {
 			</div>
 			<button
 				className={cn(
-					'group hidden sm:block fixed bottom-8 left-8 z-[51] h-6 w-12 rounded-full bg-zinc-200',
-					{ 'bg-white-50': active }
+					'group hidden sm:block fixed bottom-8 left-8 z-40 h-6 w-12 rounded-full bg-zinc-200',
+					{ 'bg-white': active }
 				)}
 				onClick={() => setActive(!active)}
 				type='button'
@@ -117,8 +117,7 @@ const WindowsMode = () => {
 					className={cn(
 						'flex size-7 -translate-y-[0.12rem] outline outline-3 outline-zinc-300 items-center justify-center  rounded-full bg-zinc-50 text-zinc-300 transition-all group-hover:scale-95 group-active:scale-90',
 						{
-							'translate-x-5 bg-blue-400 text-white-50 outline-white-50':
-								active,
+							'translate-x-5 bg-blue-400 text-white outline-white': active,
 						}
 					)}
 				>

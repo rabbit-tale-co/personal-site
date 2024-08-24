@@ -6,11 +6,13 @@ import { februaryData } from 'lib/activity/2024/feb'
 import { aprilData } from 'lib/activity/2024/apr'
 import { mayData } from 'lib/activity/2024/may'
 import { augData } from 'lib/activity/2024/aug'
+import { Gauge } from 'components/Gauge'
 
 const data24 = [augData, mayData, aprilData, marchData, februaryData]
 
 const Page = () => (
 	<Layout>
+		{/* <Gauge value={50} size={64} /> */}
 		<Tag year='2024' />
 		{data24.map((data, index) => (
 			<Calendar data={data} key={index.toString()} />
