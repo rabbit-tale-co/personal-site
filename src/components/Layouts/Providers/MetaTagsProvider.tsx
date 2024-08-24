@@ -9,7 +9,7 @@ type MetaTagsProviderProps = {
 const MetaTagsProvider = ({
 	title = 'Kris German',
 	description = 'Kris German is an aspiring design engineer building brands, systems, and products.',
-	ogImage = 'public/og.webp',
+	ogImage = 'https://portfolio.rabbittale.co/og.webp',
 }: MetaTagsProviderProps) => (
 	<Head>
 		<meta charSet='utf-8' />
