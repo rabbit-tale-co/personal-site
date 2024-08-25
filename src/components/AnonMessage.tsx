@@ -1,6 +1,6 @@
-import * as React from "react";
-import { cn } from "src/utils/tw";
-import Button from "./Button";
+import * as React from 'react'
+import { cn } from 'src/utils/tw'
+import Button from './Button'
 import {
 	Dialog,
 	DialogContent,
@@ -8,11 +8,11 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from "./ui/dialog";
-import { z } from "zod";
-import { OutlineMail } from "icons/Icons";
-import { Textarea } from "./ui/textarea";
-import DrawingCanvas, { type DrawingCanvasRef } from "./DrawingCanvas";
+} from './ui/dialog'
+import { z } from 'zod'
+import { OutlineMail } from 'icons/Icons'
+import { Textarea } from './ui/textarea'
+import DrawingCanvas, { type DrawingCanvasRef } from './DrawingCanvas'
 import {
 	Form,
 	FormControl,
@@ -20,31 +20,31 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "./ui/form";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "../../firebase.config";
-import { bunnyLog } from "bunny-log";
-import Cookies from "js-cookie";
+} from './ui/form'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { doc, setDoc } from 'firebase/firestore'
+import { db } from '../../firebase.config'
+import { bunnyLog } from 'bunny-log'
+import Cookies from 'js-cookie'
 
 export function DrawerDialogDemo() {
-	const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = React.useState(false)
 
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
 				<button
-					aria-label={"Message"}
-					className="flex w-full items-center gap-2 rounded-xl px-3 transition-colors py-2 font-medium text-zinc-700 sm:hover:bg-zinc-100"
-					type="button"
+					aria-label={'Message'}
+					className='flex w-full items-center gap-2 rounded-xl px-3 transition-colors py-2 font-medium text-zinc-700 sm:hover:bg-zinc-100'
+					type='button'
 				>
 					<OutlineMail size={20} />
 					Message
 				</button>
 			</DialogTrigger>
-			<DialogContent className="sm:max-w-[425px]">
+			<DialogContent className='sm:max-w-[425px]'>
 				<DialogHeader>
 					<DialogTitle>Anonymous message</DialogTitle>
 					<DialogDescription>
@@ -55,95 +55,96 @@ export function DrawerDialogDemo() {
 				<ProfileForm setOpen={setOpen} />
 			</DialogContent>
 		</Dialog>
-	);
+	)
 }
 
 const FormSchema = z.object({
 	message: z
 		.string()
 		.min(2, {
-			message: "Message must be at least 2 characters.",
+			message: 'Message must be at least 2 characters.',
 		})
 		.max(300, {
-			message: "Message must not be longer than 300 characters.",
+			message: 'Message must not be longer than 300 characters.',
 		}),
 	drawing: z.string().optional(),
-});
+})
 
 function ProfileForm({
 	className,
 	setOpen,
 }: {
-	className?: string;
-	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	className?: string
+	setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) {
 	const form = useForm<z.infer<typeof FormSchema>>({
 		resolver: zodResolver(FormSchema),
-	});
+	})
 
-	const canvasRef = React.useRef<DrawingCanvasRef | null>(null);
+	const canvasRef = React.useRef<DrawingCanvasRef | null>(null)
 
 	async function onSubmit(data: z.infer<typeof FormSchema>) {
 		// Check if a cooldown cookie exists
-		const lastSubmission = Cookies.get("lastSubmission");
-		const cooldownPeriod = 5 * 60 * 1000; // 5 minutes in milliseconds
+		const lastSubmission = Cookies.get('lastSubmission')
+		const cooldownPeriod = 5 * 60 * 1000 // 5 minutes in milliseconds
 
 		if (lastSubmission) {
-			const timeSinceLastSubmission = Date.now() - parseInt(lastSubmission, 10);
+			const timeSinceLastSubmission =
+				Date.now() - Number.parseInt(lastSubmission, 10)
 			if (timeSinceLastSubmission < cooldownPeriod) {
-				const timeLeftMs = cooldownPeriod - timeSinceLastSubmission;
-				const minutes = Math.floor(timeLeftMs / 60000);
-				const seconds = Math.floor((timeLeftMs % 60000) / 1000);
+				const timeLeftMs = cooldownPeriod - timeSinceLastSubmission
+				const minutes = Math.floor(timeLeftMs / 60000)
+				const seconds = Math.floor((timeLeftMs % 60000) / 1000)
 
 				toast.error(
-					`Please wait ${minutes} minute(s) and ${seconds} second(s) before sending another message.`,
-				);
-				return;
+					`Please wait ${minutes} minute(s) and ${seconds} second(s) before sending another message.`
+				)
+				return
 			}
 		}
 
-		const canvas = canvasRef.current;
-		let canvasImage = "";
+		const canvas = canvasRef.current
+		let canvasImage = ''
 
-		if (canvas && typeof canvas.getDataURL === "function") {
-			canvasImage = canvas.getDataURL();
-			data.drawing = canvasImage;
+		if (canvas && typeof canvas.getDataURL === 'function') {
+			canvasImage = canvas.getDataURL()
+			data.drawing = canvasImage
 		} else {
 			bunnyLog.error(
-				"Canvas is not initialized or getDataURL method is missing",
-			);
+				'Canvas is not initialized or getDataURL method is missing'
+			)
 		}
 
 		const saveMessage = async () => {
-			const docRef = doc(db, "anonymousMessages", `msg_${Date.now()}`);
-			await setDoc(docRef, data);
-			bunnyLog.info("Document written with ID: ", docRef.id);
+			const docRef = doc(db, 'anonymousMessages', `msg_${Date.now()}`)
+			await setDoc(docRef, data)
+			bunnyLog.info('Document written with ID: ', docRef.id)
 			// Set a cookie with the current timestamp
-			Cookies.set("lastSubmission", Date.now().toString(), { expires: 1 / 24 }); // expires in 1 hour (1/24 of a day)
-		};
+			Cookies.set('lastSubmission', Date.now().toString(), { expires: 1 / 24 }) // expires in 1 hour (1/24 of a day)
+		}
 
 		toast.promise(saveMessage(), {
-			loading: "Saving your message...",
+			loading: 'Saving your message...',
 			success: () => {
-				setOpen(false); // Close the dialog after a successful submission
-				return "Message sent successfully!";
+				setOpen(false) // Close the dialog after a successful submission
+				return 'Message sent successfully!'
 			},
-			error: "Error sending message",
-		});
+			error: 'Error sending message',
+		})
 	}
 
 	return (
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className={cn("grid items-start gap-4", className)}
+				className={cn('grid items-start gap-4', className)}
 			>
 				<FormField
 					control={form.control}
-					name="drawing"
+					name='drawing'
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel htmlFor="drawing">Draw your message</FormLabel>
+							<FormLabel htmlFor='drawing'>Draw your message</FormLabel>
 							<FormControl>
 								<DrawingCanvas
 									ref={canvasRef}
@@ -159,14 +160,14 @@ function ProfileForm({
 
 				<FormField
 					control={form.control}
-					name="message"
+					name='message'
 					render={({ field }) => (
 						<FormItem>
 							<FormLabel>Message</FormLabel>
 							<FormControl>
 								<Textarea
-									placeholder="Enter your anonymous message here"
-									className="resize-none"
+									placeholder='Enter your anonymous message here'
+									className='resize-none'
 									maxLength={300}
 									{...field}
 								/>
@@ -176,12 +177,12 @@ function ProfileForm({
 					)}
 				/>
 
-				<div className="flex gap-2 place-self-end">
-					<Button type="submit" variant={"accent"} title={"Submit"} />
+				<div className='flex gap-2 place-self-end'>
+					<Button type='submit' variant={'accent'} title={'Submit'} />
 				</div>
 			</form>
 		</Form>
-	);
+	)
 }
 
-export default ProfileForm;
+export default ProfileForm

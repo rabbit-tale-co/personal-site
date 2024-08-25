@@ -1,7 +1,10 @@
 import type React from 'react'
 import type { IconProps } from 'icons/IconProps'
 
-export const OutlineWindows: React.FC<IconProps> = ({ className, size }) => (
+export const OutlineWindows: React.FC<IconProps> = ({
+	className,
+	size = 24,
+}) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
 		width={size}
@@ -26,7 +29,7 @@ export const OutlineWindows: React.FC<IconProps> = ({ className, size }) => (
 	</svg>
 )
 
-export const SolidWindows: React.FC<IconProps> = ({ className, size }) => (
+export const SolidWindows: React.FC<IconProps> = ({ className, size = 24 }) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
 		width={size}
@@ -45,7 +48,10 @@ export const SolidWindows: React.FC<IconProps> = ({ className, size }) => (
 	</svg>
 )
 
-export const DuotoneWindows: React.FC<IconProps> = ({ className, size }) => (
+export const DuotoneWindows: React.FC<IconProps> = ({
+	className,
+	size = 24,
+}) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
 		width={size}

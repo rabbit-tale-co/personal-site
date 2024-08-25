@@ -1,7 +1,10 @@
 import type React from 'react'
 import type { IconProps } from 'icons/IconProps'
 
-export const OutlineDribbble: React.FC<IconProps> = ({ className, size }) => (
+export const OutlineDribbble: React.FC<IconProps> = ({
+	className,
+	size = 24,
+}) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
 		width={size}
@@ -26,7 +29,10 @@ export const OutlineDribbble: React.FC<IconProps> = ({ className, size }) => (
 	</svg>
 )
 
-export const SolidDribbble: React.FC<IconProps> = ({ className, size }) => (
+export const SolidDribbble: React.FC<IconProps> = ({
+	className,
+	size = 24,
+}) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
 		width={size}
@@ -45,7 +51,10 @@ export const SolidDribbble: React.FC<IconProps> = ({ className, size }) => (
 	</svg>
 )
 
-export const DuotoneDribbble: React.FC<IconProps> = ({ className, size }) => (
+export const DuotoneDribbble: React.FC<IconProps> = ({
+	className,
+	size = 24,
+}) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
 		width={size}

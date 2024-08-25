@@ -3,7 +3,7 @@ import type { IconProps } from 'icons/IconProps'
 
 export const OutlineFaceSmilling: React.FC<IconProps> = ({
 	className,
-	size,
+	size = 24,
 }) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
@@ -29,7 +29,10 @@ export const OutlineFaceSmilling: React.FC<IconProps> = ({
 	</svg>
 )
 
-export const SolidFaceSmilling: React.FC<IconProps> = ({ className, size }) => (
+export const SolidFaceSmilling: React.FC<IconProps> = ({
+	className,
+	size = 24,
+}) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
 		width={size}
@@ -50,7 +53,7 @@ export const SolidFaceSmilling: React.FC<IconProps> = ({ className, size }) => (
 
 export const DuotoneFaceSmilling: React.FC<IconProps> = ({
 	className,
-	size,
+	size = 24,
 }) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg

@@ -1,7 +1,10 @@
 import type React from 'react'
 import type { IconProps } from 'icons/IconProps'
 
-export const OutlineTwitter: React.FC<IconProps> = ({ className, size }) => (
+export const OutlineTwitter: React.FC<IconProps> = ({
+	className,
+	size = 24,
+}) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
 		width={size}
@@ -20,7 +23,7 @@ export const OutlineTwitter: React.FC<IconProps> = ({ className, size }) => (
 	</svg>
 )
 
-export const SolidTwitter: React.FC<IconProps> = ({ className, size }) => (
+export const SolidTwitter: React.FC<IconProps> = ({ className, size = 24 }) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
 		width={size}
@@ -39,7 +42,10 @@ export const SolidTwitter: React.FC<IconProps> = ({ className, size }) => (
 	</svg>
 )
 
-export const DuotoneTwitter: React.FC<IconProps> = ({ className, size }) => (
+export const DuotoneTwitter: React.FC<IconProps> = ({
+	className,
+	size = 24,
+}) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
 		width={size}

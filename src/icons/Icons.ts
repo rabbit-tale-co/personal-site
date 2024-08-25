@@ -1,3 +1,5 @@
+import { OutlineUndo } from './assets/arrows/Undo'
+
 export { SolidLogo } from './assets/logo/logo'
 export { SolidLogoText } from './assets/logo/logo_text'
 
@@ -211,6 +213,9 @@ export { OutlineStars, SolidStars, DuotoneStars } from './assets/weather/Stars'
 
 // Arrows
 
+export { OutlineRedo, SolidRedo, DuotoneRedo } from './assets/arrows/Redo'
+export { OutlineUndo, SolidUndo, DuotoneUndo } from './assets/arrows/Undo'
+
 export {
 	OutlineArrowRight,
 	SolidArrowRight,
@@ -240,6 +245,8 @@ export {
 // Design
 
 export { OutlineImage, SolidImage, DuotoneImage } from './assets/design/Image'
+
+export { OutlineBrush, SolidBrush, DuotoneBrush } from './assets/design/Brush'
 
 // Charts and Graphs
 export {

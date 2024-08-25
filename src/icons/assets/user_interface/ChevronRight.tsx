@@ -3,7 +3,7 @@ import type { IconProps } from 'icons/IconProps'
 
 export const OutlineChevronRight: React.FC<IconProps> = ({
 	className,
-	size,
+	size = 24,
 }) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
@@ -23,7 +23,10 @@ export const OutlineChevronRight: React.FC<IconProps> = ({
 	</svg>
 )
 
-export const SolidChevronRight: React.FC<IconProps> = ({ className, size }) => (
+export const SolidChevronRight: React.FC<IconProps> = ({
+	className,
+	size = 24,
+}) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
 		width={size}
@@ -44,7 +47,7 @@ export const SolidChevronRight: React.FC<IconProps> = ({ className, size }) => (
 
 export const DuotoneChevronRight: React.FC<IconProps> = ({
 	className,
-	size,
+	size = 24,
 }) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg

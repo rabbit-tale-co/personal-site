@@ -1,7 +1,7 @@
 import type React from 'react'
 import type { IconProps } from 'icons/IconProps'
 
-export const OutlineEye: React.FC<IconProps> = ({ className, size }) => (
+export const OutlineEye: React.FC<IconProps> = ({ className, size = 24 }) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
 		width={size}
@@ -26,7 +26,7 @@ export const OutlineEye: React.FC<IconProps> = ({ className, size }) => (
 	</svg>
 )
 
-export const SolidEye: React.FC<IconProps> = ({ className, size }) => (
+export const SolidEye: React.FC<IconProps> = ({ className, size = 24 }) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
 		width={size}
@@ -51,7 +51,7 @@ export const SolidEye: React.FC<IconProps> = ({ className, size }) => (
 	</svg>
 )
 
-export const DuotoneEye: React.FC<IconProps> = ({ className, size }) => (
+export const DuotoneEye: React.FC<IconProps> = ({ className, size = 24 }) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
 		width={size}

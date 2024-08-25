@@ -1,7 +1,10 @@
 import type React from 'react'
 import type { IconProps } from 'icons/IconProps'
 
-export const OutlineBar01Up: React.FC<IconProps> = ({ className, size }) => (
+export const OutlineBar01Up: React.FC<IconProps> = ({
+	className,
+	size = 24,
+}) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
 		width={size}
@@ -20,7 +23,7 @@ export const OutlineBar01Up: React.FC<IconProps> = ({ className, size }) => (
 	</svg>
 )
 
-export const SolidBar01Up: React.FC<IconProps> = ({ className, size }) => (
+export const SolidBar01Up: React.FC<IconProps> = ({ className, size = 24 }) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
 		width={size}
@@ -39,7 +42,10 @@ export const SolidBar01Up: React.FC<IconProps> = ({ className, size }) => (
 	</svg>
 )
 
-export const DuotoneBar01Up: React.FC<IconProps> = ({ className, size }) => (
+export const DuotoneBar01Up: React.FC<IconProps> = ({
+	className,
+	size = 24,
+}) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
 		width={size}

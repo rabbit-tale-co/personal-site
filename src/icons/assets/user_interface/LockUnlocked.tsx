@@ -3,7 +3,7 @@ import type { IconProps } from 'icons/IconProps'
 
 export const OutlineLockUnlocked: React.FC<IconProps> = ({
 	className,
-	size,
+	size = 24,
 }) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
@@ -23,7 +23,10 @@ export const OutlineLockUnlocked: React.FC<IconProps> = ({
 	</svg>
 )
 
-export const SolidLockUnlocked: React.FC<IconProps> = ({ className, size }) => (
+export const SolidLockUnlocked: React.FC<IconProps> = ({
+	className,
+	size = 24,
+}) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
 		width={size}
@@ -50,7 +53,7 @@ export const SolidLockUnlocked: React.FC<IconProps> = ({ className, size }) => (
 
 export const DuotoneLockUnlocked: React.FC<IconProps> = ({
 	className,
-	size,
+	size = 24,
 }) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg

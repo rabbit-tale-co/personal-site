@@ -1,7 +1,10 @@
 import type React from 'react'
 import type { IconProps } from 'icons/IconProps'
 
-export const OutlineClearNight: React.FC<IconProps> = ({ className, size }) => (
+export const OutlineClearNight: React.FC<IconProps> = ({
+	className,
+	size = 24,
+}) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
 		width={size}
@@ -20,7 +23,10 @@ export const OutlineClearNight: React.FC<IconProps> = ({ className, size }) => (
 	</svg>
 )
 
-export const SolidClearNight: React.FC<IconProps> = ({ className, size }) => (
+export const SolidClearNight: React.FC<IconProps> = ({
+	className,
+	size = 24,
+}) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
 		width={size}
@@ -39,7 +45,10 @@ export const SolidClearNight: React.FC<IconProps> = ({ className, size }) => (
 	</svg>
 )
 
-export const DuotoneClearNight: React.FC<IconProps> = ({ className, size }) => (
+export const DuotoneClearNight: React.FC<IconProps> = ({
+	className,
+	size = 24,
+}) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
 		width={size}
