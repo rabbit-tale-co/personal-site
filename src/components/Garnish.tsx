@@ -8,12 +8,15 @@ type GarnishProps = {
 const Garnish = ({ className }: GarnishProps) => (
 	<span
 		className={cn(
-			'relative flex size-4 items-center justify-center overflow-hidden *:transition-transform *:duration-&lsqb;400ms&rsqb; *:ease-bounce',
+			'relative flex items-center justify-center overflow-hidden *:transition-transform *:duration-&lsqb;400ms&rsqb; *:ease-bounce',
 			className
 		)}
 	>
-		<OutlineArrowRight className='absolute -translate-x-5 sm:group-hover:translate-x-0' />
-		<OutlineArrowRight className='sm:group-hover:translate-x-5' />
+		<OutlineArrowRight
+			className='absolute -translate-x-5 sm:group-hover:translate-x-0'
+			size={16}
+		/>
+		<OutlineArrowRight className='sm:group-hover:translate-x-5' size={16} />
 	</span>
 )
 

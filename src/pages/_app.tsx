@@ -2,12 +2,14 @@ import React from 'react'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import type { AppProps } from 'next/app'
 import 'styles/globals.css'
-import FontProvider from 'components/Layouts/Providers/FontProvider'
+import { AuthProvider } from 'context/authContext'
 
 const App = ({ Component, pageProps }: AppProps) => {
 	return (
 		<React.Fragment>
-			<Component {...pageProps} />
+			<AuthProvider>
+				<Component {...pageProps} />
+			</AuthProvider>
 			<GoogleAnalytics gaId={process.env.NEXT_PUBLIC_ANALYTICS_ID ?? ''} />
 		</React.Fragment>
 	)

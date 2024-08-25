@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -16,13 +20,30 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "components/*": ["./src/components/*"],
-      "hooks/*": ["./src/hooks/*"],
-      "lib/*": ["./src/lib/*"],
-      "public/*": ["./../public/*"],
-      "styles/*": ["./src/styles/*"],
-      "utils/*": ["./src/utils/*"],
-      "icons/*": ["./src/icons/*"]
+      "components/*": [
+        "./src/components/*"
+      ],
+      "hooks/*": [
+        "./src/hooks/*"
+      ],
+      "lib/*": [
+        "./src/lib/*"
+      ],
+      "public/*": [
+        "./../public/*"
+      ],
+      "styles/*": [
+        "./src/styles/*"
+      ],
+      "utils/*": [
+        "./src/utils/*"
+      ],
+      "icons/*": [
+        "./src/icons/*"
+      ],
+      "context/*": [
+        "./src/context/*"
+      ]
     }
   },
   "include": [
@@ -31,5 +52,7 @@
     "**/*.tsx",
     "src/hooks/useClickOutside.tsx"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
