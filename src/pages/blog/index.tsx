@@ -120,7 +120,7 @@ const Page = ({ posts }: { posts: postTypes[] }) => {
 
 			{/* Display older posts section only if there are more than 4 posts */}
 			{posts.length > 4 && (
-				<Section className="mt-10">
+				<Section className="sm:mt-40">
 					<h2 className="mb-12 text-xl font-medium">Older Posts</h2>
 					<div className="mx-auto flex w-full flex-col gap-10">
 						{posts.slice(4).map((post: postTypes, index: number) => (

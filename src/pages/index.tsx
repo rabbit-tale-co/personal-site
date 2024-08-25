@@ -15,7 +15,7 @@ const Page = () => (
 		{/* <Gauge value={50} size={64} /> */}
 		<Tag year='2024' />
 		{data24.map((data, index) => (
-			<Calendar data={data} key={index.toString()} />
+			<Calendar data={data} key={index.toString()} dayNameFormat={'short'} />
 		))}
 		{/* <Tag year="2023" />
     <Calendar data={decemberData} /> */}
