@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import { bunnyLog } from 'bunny-log'
 import { toast } from 'sonner'
 import jwt from 'jsonwebtoken'
+import { setCookie, parseCookies, destroyCookie } from 'nookies'
 
 // Define the User interface
 interface User {
@@ -19,10 +20,10 @@ interface User {
 type AuthStatus = 'loading' | 'error' | 'success'
 
 // Define the AuthContextType interface
-interface AuthContextType {
+type AuthContextType = {
 	user: User | null
 	status: AuthStatus
-	login: (identifier: string, password: string) => Promise<void>
+	login: (identifier: string, password: string) => Promise<User | null>
 	logout: () => void
 	error: string | null
 }
@@ -39,8 +40,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 	// Initialize the auth state
 	useEffect(() => {
-		const token = localStorage.getItem('token')
-		const identifier = localStorage.getItem('identifier')
+		const cookies = parseCookies()
+		const token = cookies.token
+		const identifier = cookies.identifier
 
 		if (token && identifier) {
 			try {
@@ -50,12 +52,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 					setStatus('success')
 				} else {
 					// Token is expired
-					localStorage.removeItem('token')
-					localStorage.removeItem('identifier')
+					destroyCookie(null, 'token')
+					destroyCookie(null, 'identifier')
 					setStatus('error')
 				}
 			} catch (err) {
 				console.error('Token validation error:', err)
+				destroyCookie(null, 'token')
+				destroyCookie(null, 'identifier')
 				setStatus('error')
 			}
 		} else {
@@ -63,8 +67,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		}
 	}, [])
 
+	// Redirect if user is already logged in and tries to access the login page
+	useEffect(() => {
+		if (status === 'success' && router.pathname === '/login') {
+			router.push('/')
+		}
+	}, [status, router])
+
 	// Login function
-	const login = async (identifier: string, password: string) => {
+	const login = async (
+		identifier: string,
+		password: string
+	): Promise<User | null> => {
 		setStatus('loading')
 		setError(null)
 
@@ -85,28 +99,35 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 			const { token } = data
 
-			// Store user information and token in state and localStorage
+			// Store user information and token in state and cookies
 			const userData: User = { identifier, token }
 			setUser(userData)
-			localStorage.setItem('token', token)
-			localStorage.setItem('identifier', identifier)
+			setCookie(null, 'token', token, {
+				maxAge: 3600,
+				path: '/',
+			})
+			setCookie(null, 'identifier', identifier, {
+				maxAge: 3600,
+				path: '/',
+			})
 
 			setStatus('success')
-			router.push('/anons') // Redirect to /anons after successful login
+			return userData
 		} catch (err: any) {
 			console.error('Login error:', err) // Log the error
 			bunnyLog.error('Login failed:', err)
 			setError(err.message || 'Failed to login')
 			setStatus('error')
 			toast.error(err.message || 'Failed to login') // Display toast on error
+			return null
 		}
 	}
 
 	// Logout function
 	const logout = () => {
 		setUser(null)
-		localStorage.removeItem('token')
-		localStorage.removeItem('identifier')
+		destroyCookie(null, 'token')
+		destroyCookie(null, 'identifier')
 		router.push('/login')
 	}
 

@@ -20,6 +20,8 @@ import { toast } from 'sonner'
 import bcrypt from 'bcryptjs'
 import { useRouter } from 'next/router'
 import { useAuth } from 'context/authContext'
+import { useEffect } from 'react'
+import { bunnyLog } from 'bunny-log'
 
 type FormData = {
 	identifier: string
@@ -36,7 +38,14 @@ const LoginPage = () => {
 		resolver: zodResolver(formSchema),
 	})
 	const router = useRouter()
-	const { login } = useAuth()
+	const { login, user } = useAuth()
+
+	useEffect(() => {
+		console.log('Current user:', user) // Add logging to check the value of user
+		if (user) {
+			router.push('/')
+		}
+	}, [user, router])
 
 	const onSubmit: SubmitHandler<FormData> = async (data) => {
 		try {
@@ -59,7 +68,7 @@ const LoginPage = () => {
 
 				if (passwordMatch) {
 					const user = await login(data.identifier, data.password)
-					if (user) {
+					if (user !== null && user !== undefined) {
 						toast.success('Login successful!')
 					}
 				} else {

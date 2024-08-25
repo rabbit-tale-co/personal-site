@@ -1,7 +1,7 @@
 import type { GetServerSideProps } from 'next'
 import type React from 'react'
 import Image from 'next/image'
-import { collection, deleteDoc, doc, getDocs } from 'firebase/firestore'
+import { getDocs, collection, deleteDoc, doc } from 'firebase/firestore'
 import { db } from '../../../firebase.config'
 import Section from 'components/Section'
 import Layout from 'components/Layouts/Layout'
@@ -10,7 +10,6 @@ import Button from 'components/Button'
 import { bunnyLog } from 'bunny-log'
 import { toast } from 'sonner'
 import withAuth from 'src/hoc/withAuth'
-import { parseCookies } from 'nookies'
 
 interface Message {
 	id: string
@@ -35,12 +34,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	}
 
 	try {
-		const messagesCollection = collection(db, 'anonymousMessages')
-		const querySnapshot = await getDocs(messagesCollection)
-		const messages = querySnapshot.docs.map((doc) => ({
-			id: doc.id,
-			...doc.data(),
-		}))
+		const querySnapshot = await getDocs(collection(db, 'anonymousMessages'))
+		const messages = querySnapshot.docs
+			.map((doc) => ({
+				id: doc.id,
+				...doc.data(),
+			}))
+			.reverse() as Message[] // Reverse to show newest first
 
 		return {
 			props: {
