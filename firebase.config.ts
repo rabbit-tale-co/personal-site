@@ -1,7 +1,6 @@
-// firebaseConfig.js
-import { initializeApp } from 'firebase/app'
-import { getFirestore } from 'firebase/firestore'
-import { bunnyLog } from 'bunny-log'
+import { getApp, getApps, initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { bunnyLog } from "bunny-log";
 
 const firebaseConfig = {
 	apiKey: process.env.FIREBASE_API_KEY,
@@ -11,11 +10,15 @@ const firebaseConfig = {
 	messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
 	appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 	measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
+};
+
+if (!getApps().length) {
+	bunnyLog.info("Firebase config:", firebaseConfig);
 }
 
-const app = initializeApp(firebaseConfig)
-const db = getFirestore(app)
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+const db = getFirestore(app);
 
-bunnyLog.database('Firebase initialized')
+bunnyLog.database("Firebase initialized");
 
-export { db, app }
+export { db, app };
