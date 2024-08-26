@@ -12,8 +12,6 @@ const withAuth = <P extends object>(
 		useEffect(() => {
 			if (status === 'success' && !user) {
 				router.push('/login')
-			} else if (status === 'success' && user) {
-				router.push('/anons')
 			}
 		}, [user, status, router])
 
