@@ -40,13 +40,6 @@ const LoginPage = () => {
 	const router = useRouter()
 	const { login, user } = useAuth()
 
-	useEffect(() => {
-		console.log('Current user:', user) // Add logging to check the value of user
-		if (user) {
-			router.push('/')
-		}
-	}, [user, router])
-
 	const onSubmit: SubmitHandler<FormData> = async (data) => {
 		try {
 			// Fetch the credentials document from Firestore
@@ -63,23 +56,24 @@ const LoginPage = () => {
 			}
 
 			// Compare both the identifier and password together
-			if (data.identifier.trim() === identifier) {
-				const passwordMatch = await bcrypt.compare(data.password, passwordHash)
+			const isIdentifierMatch = data.identifier.trim() === identifier
+			const isPasswordMatch = await bcrypt.compare(data.password, passwordHash)
 
-				if (passwordMatch) {
-					const user = await login(data.identifier, data.password)
-					if (user !== null && user !== undefined) {
-						toast.success('Login successful!')
-					}
+			if (isIdentifierMatch && isPasswordMatch) {
+				const user = await login(data.identifier, data.password)
+				if (user) {
+					toast.success('Login successful!')
+					router.push('/anons')
 				} else {
-					throw new Error('Invalid identifier or password')
+					throw new Error('User login failed')
 				}
 			} else {
 				throw new Error('Invalid identifier or password')
 			}
 		} catch (error: any) {
-			toast.error(error.message || 'An error occurred during login')
-			console.error('An error occurred:', error)
+			// Improved logging
+			bunnyLog.error('Login error', { error, identifier: data.identifier })
+			toast.error('Invalid identifier or password')
 		}
 	}
 
