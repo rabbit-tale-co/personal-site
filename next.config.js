@@ -18,6 +18,8 @@ const nextConfig = {
 	reactStrictMode: true,
 	env: {
 		JWT_SECRET: process.env.JWT_SECRET,
+		FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
+		FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
 	},
 }
 
